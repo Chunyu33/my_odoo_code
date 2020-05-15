@@ -1,0 +1,11 @@
+<odoo>
+    <data>
+        <record id="my_auto_sequence" model="ir.sequence">
+            <field name="name">物料编码</field>
+            <field name="code">warehouse.material</field>
+            <field name="prefix">SZPDC</field>
+            <field name="padding">5</field>
+            <field name="company_id" eval="False"/>
+        </record>
+    </data>
+</odoo>

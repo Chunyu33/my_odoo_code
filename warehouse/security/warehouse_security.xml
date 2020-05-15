@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo noupdate="0">
+    <data>
+        <!-- 用户组栏分类 -->
+        <record id="module_warehouse" model="ir.module.category">
+            <field name="name">仓库管理</field>
+        </record>
+
+        <!-- 管理员组 -->
+        <record id="manager_group" model="res.groups">
+            <field name="name">仓库管理员</field>
+            <field name="comment">管理员拥有全部权限</field>
+            <field name="category_id" ref="module_warehouse"/>
+        </record>
+
+         <!-- 部门经理 -->
+        <record id="dev_manager_group" model="res.groups">
+            <field name="name">部门经理</field>
+            <field name="comment">审批部门、子部门记录</field>
+            <field name="category_id" ref="module_warehouse"/>
+        </record>
+
+
+         <!-- 管理员组 -->
+        <record id="user_group" model="res.groups">
+            <field name="name">普通用户</field>
+            <field name="comment">能查看自己物料表单</field>
+            <field name="category_id" ref="module_warehouse"/>
+        </record>
+
+    </data>
+</odoo>

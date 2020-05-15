@@ -1,0 +1,58 @@
+/* 主菜单条底色 */
+.o_main_navbar {
+    background-color: #00A09D !important;
+    border-bottom: 1px solid #00A09D !important;
+}
+
+/* 菜单按钮 */
+.o_menu_apps {
+    background-color: #00A09D !important;
+}
+
+/* 菜单按钮 */
+a.dropdown-toggle {
+    background-color: #00A09D !important;
+}
+
+/* 所有菜单栏的悬浮背景色 */
+a.o_menu_entry_lvl_1:hover {
+    background-color: #006666 !important;
+}
+
+a.dropdown-toggle o-no-caret o_menu_header_lvl_1:hover {
+    background-color: #006666 !important;
+}
+
+a.o_menu_brand:hover {
+    background-color: #006666 !important;
+}
+
+a.full:hover {
+    background-color: #006666 !important;
+}
+
+a.dropdown-toggle:hover {
+    background-color: #006666 !important;
+}
+
+.o_main_navbar > ul > li > a:hover {
+    background-color: #006666 !important;
+}
+
+/* 默认按钮样色 */
+.btn {
+    border: none;
+}
+
+/* 按钮样式 */
+.btn-primary {
+    background-color: #00A09D !important;
+    color: #FFF !important;
+}
+
+/* 自定义按钮样式 */
+.button_my {
+    background-color: #33ccff !important;
+    color: #FFF !important;
+    cursor: pointer;
+}

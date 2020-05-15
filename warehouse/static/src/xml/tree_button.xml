@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<templates id="template_02" xml:space="preserve">
+        <t t-extend="ListView.buttons">
+          <t t-jquery="div.o_list_buttons" t-operation="append">
+              <!-- 针对特定页面显示 widget.displayName:模型里面的 _description值 t-if="widget.displayName == '物料借还审批表' "-->
+              <t t-if="widget.displayName=='物料借还审批' ">
+                  <button class="btn btn-primary approval" type="button" groups="warehouse.manager_group" name="通过">通过</button>
+                  <button class="btn btn-primary refuse" type="button" groups="warehouse.manager_group" name="驳回">驳回</button>
+              </t>
+          </t>
+        </t>
+</templates>

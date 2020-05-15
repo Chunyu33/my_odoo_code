@@ -1,0 +1,34 @@
+/*.odoo .my_button_css {*/
+/*  font-weight: normal;*/
+/*  width: 132px !important;*/
+/*  height: 40px;*/
+/*  color: #1E9600;*/
+/*  margin: 0px -1px -1px 0px;*/
+/*  padding: 0;*/
+/*  border: 1px solid #dddddd;*/
+/*  border-radius: 0;*/
+/*  box-shadow: none;*/
+/*  background: greenyellow;*/
+/*}*/
+/*.btn {*/
+/*    border: none;*/
+/*}*/
+
+/* 按钮样式 */
+/*.btn-primary {*/
+/*    background-color: #00A09D !important;*/
+/*    color: #FFF !important;*/
+/*}*/
+
+/* 自定义按钮样式 */
+.approval {
+    background-color: #6699ff !important;
+    color: #FFF !important;
+    cursor: pointer;
+}
+
+.refuse {
+    background-color: #ff3300 !important;
+    color: #FFF !important;
+    cursor: pointer;
+}

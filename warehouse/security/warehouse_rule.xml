@@ -1,0 +1,87 @@
+<odoo>
+    <data noupdate="0">
+
+         <record id="user_not_edit" model="ir.rule">
+             <field name="name">物料审批表单--不可修改</field>
+             <field name="model_id" ref="model_warehouse_approval"/>
+             <field name="groups" eval="[(4, ref('warehouse.user_group'))]"/>
+             <field name="perm_read" eval="False"/>
+             <field name="perm_write" eval="True"/>
+             <field name="perm_create" eval="False"/>
+             <field name="perm_unlink" eval="False"/>
+             <field name="domain_force">
+                 [('state','!=','out')]
+             </field>
+         </record>
+
+        <!--  只能看到自己部门及子部门的登录信息   -->
+        <record id="warehouse_users_dev_manager_rule" model="ir.rule">
+            <field name="name">登录信息--经理记录规则</field>
+            <field name="model_id" ref="model_res_users"/>
+            <field name="groups" eval="[(4, ref('warehouse.dev_manager_group'))]"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_unlink" eval="False"/>
+            <field name="domain_force">
+                ['|',('department.id', 'in', user.department.ids),('department.parent_department.id', 'in',
+                user.department.ids)]
+            </field>
+        </record>
+
+        <record id="warehouse_approval_dev_rule" model="ir.rule">
+            <field name="name">物料审批表--部门经理记录规则</field>
+            <field name="model_id" ref="model_warehouse_approval"/>
+            <field name="groups" eval="[(4, ref('warehouse.dev_manager_group'))]"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_unlink" eval="False"/>
+            <field name="domain_force">
+                ['|',('department_id.id', 'in', user.department.ids),('department_id.parent_department.id', 'in',
+                user.department.ids)]
+            </field>
+        </record>
+
+        <!-- 普通用户 -->
+        <record id="warehouse_approval_user_rule" model="ir.rule">
+            <field name="name">物料审批表单--普通用户记录规则</field>
+            <field name="model_id" ref="model_warehouse_approval"/>
+            <field name="groups" eval="[(4, ref('warehouse.user_group'))]"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_unlink" eval="False"/>
+            <field name="domain_force">
+                [('department_id.id', 'in', user.department.ids)]
+            </field>
+        </record>
+
+        <record id="warehouse_users_user_rule" model="ir.rule">
+            <field name="name">登录信息--普通用户记录规则</field>
+            <field name="model_id" ref="model_res_users"/>
+            <field name="groups" eval="[(4, ref('warehouse.user_group'))]"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_unlink" eval="False"/>
+            <field name="domain_force">
+                [('id', '=', user.id)]
+            </field>
+        </record>
+
+        <record id="warehouse_approval_user_rule" model="ir.rule">
+            <field name="name">物料审批表--普通用户记录规则</field>
+            <field name="model_id" ref="model_warehouse_approval"/>
+            <field name="groups" eval="[(4, ref('warehouse.user_group'))]"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_unlink" eval="False"/>
+            <field name="domain_force">
+                [('apply_user', '=', user.id)]
+            </field>
+        </record>
+
+    </data>
+</odoo>

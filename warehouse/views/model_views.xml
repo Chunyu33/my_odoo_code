@@ -1,0 +1,341 @@
+<odoo>
+    <data>
+        <!-- 仓库表  -->
+        <record model="ir.ui.view" id="warehouse_house_tree">
+            <field name="name">仓库-tree</field>
+            <field name="model">warehouse.house</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="type_name_ids"/>
+                    <field name="admin"/>
+                    <field name="materials"/>
+                </tree>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="warehouse_house_form">
+            <field name="name">仓库-form</field>
+            <field name="model">warehouse.house</field>
+            <field name="arch" type="xml">
+                <form create="false">
+                    <header>
+                    </header>
+                    <group string="基本信息">
+                        <field name="name"/>
+                        <field name="type_name_ids"/>
+                        <field name="admin"/>
+                    </group>
+                    <field name="materials"/>
+                </form>
+            </field>
+        </record>
+
+        <!--  分类  -->
+        <record model="ir.ui.view" id="warehouse_category_tree">
+            <field name="name">分类-tree</field>
+            <field name="model">warehouse.category</field>
+            <field name="arch" type="xml">
+                <tree editable="top">
+                    <field name="name"/>
+                    <field name="switch_serial"/>
+                </tree>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="warehouse_category_form">
+            <field name="name">分类-form</field>
+            <field name="model">warehouse.category</field>
+            <field name="arch" type="xml">
+                <form create="false">
+                    <header>
+                    </header>
+                    <group>
+                        <field name="name"/>
+                        <field name="switch_serial"/>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <!-- 物料管理 -->
+        <record model="ir.ui.view" id="warehouse_material_tree">
+            <field name="name">物料管理-tree</field>
+            <field name="model">warehouse.material</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="code"/>
+                    <field name="max_number"/>
+                    <field name="serial_numbers"/>
+                    <field name="unit_price"/>
+                    <field name="house"/>
+                    <field name="user"/>
+                </tree>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="warehouse_material_form">
+            <field name="name">物料管理-form</field>
+            <field name="model">warehouse.material</field>
+            <field name="arch" type="xml">
+                <form create="false">
+                    <header>
+                    </header>
+                    <group>
+                        <field name="name"/>
+                        <field name="code"/>
+                        <field name="max_number"/>
+                        <field name="unit_price"/>
+                        <field name="house"/>
+                        <field name="user"/>
+                    </group>
+                    <field name="serial_numbers"/>
+                </form>
+            </field>
+        </record>
+
+        <!-- 对普通用户编辑创建按钮 -->
+        <record model="ir.ui.view" id="view_material_groups_section">
+            <field name="name">edit_button</field>
+            <field name="model">warehouse.material</field>
+            <field name="inherit_id" ref="warehouse.warehouse_material_form"/>
+            <field name="groups_id" eval="[(4,ref('warehouse.user_group'))]"/>
+            <field name="arch" type="xml">
+                <xpath expr="/form" position="attributes">
+                    <attribute name="create">false</attribute>
+                    <attribute name="edit">false</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <!-- 物料借还审批表 -->
+        <record model="ir.ui.view" id="warehouse_approval_tree">
+            <field name="name">物料借还审批-tree</field>
+            <field name="model">warehouse.approval</field>
+            <field name="arch" type="xml">
+                <tree decoration-muted="state=='done'" decoration-danger="state=='refused'"
+                      js_class="bicon_list_view_button_approval">
+                    <field name="name"/>
+                    <field name="type"/>
+                    <field name="code"/>
+                    <field name="apply_number"/>
+                    <field name="serial_numbers"/>
+                    <field name="surplus_number"/>
+                    <field name="state"/>
+                    <field name="apply_user"/>
+                    <field name="department_id"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="warehouse_approval_form">
+            <field name="name">物料借还审批-form</field>
+            <field name="model">warehouse.approval</field>
+            <field name="arch" type="xml">
+                <form create="false">
+                    <header>
+                        <button string="出库序列号" name="input_serial" type="object" class="oe_highlight"
+                                attrs="{'invisible': [('state', 'in', ('put', 'out','done'))]}"/>
+                        <button string="申请" name="button_confirm" type="object" class="oe_highlight" confirm="确认提交？"
+                                attrs="{'invisible': [('state', 'in', ('put', 'out','done'))]}"/>
+                        <button string="归还数量" name="button_back_num" type="object" class="oe_highlight"/>
+                    </header>
+                    <group>
+                        <field name="name"/>
+                        <field name="type"/>
+                        <field name="code" readonly="1" force_save="1"/>
+                        <field name="apply_number"/>
+                        <field name="surplus_number" readonly="1" force_save="1"/>
+                        <field name="state"/>
+                        <field name="apply_user"/>
+                    </group>
+                    <hr/>
+                    <field name="serial_numbers"/>
+                    <hr/>
+                    <field name="department_id"/>
+                </form>
+            </field>
+        </record>
+
+        <!--  序列号tree  -->
+        <record model="ir.ui.view" id="warehouse_serial_tree">
+            <field name="name">序列号-tree</field>
+            <field name="model">warehouse.serial</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="serial_number"/>
+                    <field name="code"/>
+                    <field name="state"/>
+                    <field name="user"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- 物料借还记录表 -->
+        <record model="ir.ui.view" id="warehouse_record_tree">
+            <field name="name">物料借还记录-tree</field>
+            <field name="model">warehouse.record</field>
+            <field name="arch" type="xml">
+                <tree create="false">
+                    <field name="name"/>
+                    <field name="code"/>
+                    <field name="type"/>
+                    <field name="number"/>
+                    <field name="user"/>
+                    <field name="out_time"/>
+                    <field name="back_time"/>
+                </tree>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="warehouse_record_form">
+            <field name="name">物料借还记录-form</field>
+            <field name="model">warehouse.record</field>
+            <field name="arch" type="xml">
+                <form create="false">
+                    <header>
+                    </header>
+                    <group>
+                        <field name="name"/>
+                        <field name="code"/>
+                        <field name="type"/>
+                        <field name="number"/>
+                        <field name="user"/>
+                    </group>
+                    <field name="out_time"/>
+                    <field name="back_time"/>
+                </form>
+            </field>
+        </record>
+
+        <!-- 部门表 -->
+        <record model="ir.ui.view" id="warehouse_department_tree">
+            <field name="name">部门-tree</field>
+            <field name="model">warehouse.department</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="parent_department"/>
+                </tree>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="warehouse_department_form">
+            <field name="name">部门-form</field>
+            <field name="model">warehouse.department</field>
+            <field name="arch" type="xml">
+                <form create="false">
+                    <header>
+                    </header>
+                    <group>
+                        <field name="name"/>
+                        <field name="parent_department"/>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <!-- 用户表tree -->
+        <record id="warehouse_security_view_tree" model="ir.ui.view">
+            <field name="name">用户</field>
+            <field name="model">res.users</field>
+            <field name="inherit_id" ref="base.view_users_tree"/>
+            <field name="arch" type="xml">
+                <!-- 继承 before、after、replace、inside、attributes -->
+                <xpath expr="(//tree)" position="replace">
+                    <tree string="Users" editable="bottom">
+                        <field name="id"/>
+                        <field name="login"/>
+                        <field name="name"/>
+                        <field name="password"/>
+                        <field name="department" widget="many2many_tags"/>
+                        <field name="groups_id" widget="many2many_tags" domain="[('category_id.name','=','仓库管理')]"/>
+                    </tree>
+                </xpath>
+            </field>
+        </record>
+
+        <!--  填写序列号窗体form  -->
+        <record id="warehouse_input_view_form" model="ir.ui.view">
+            <field name="name">瞬态--填写序列号</field>
+            <field name="model">warehouse.input</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="序列号匹配">
+                    <sheet>
+                        <group>
+                            <field name="i_serial"/>
+                        </group>
+                    </sheet>
+                    <footer>
+                        <button type="object"
+                                name="button_submit"
+                                string="添加" class="approval"/>
+                        <button special="cancel"
+                                string="取消"
+                                class="btn-secondary"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="warehouse_number_view_form" model="ir.ui.view">
+            <field name="name">瞬态--填写数量</field>
+            <field name="model">warehouse.number</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="数量">
+                    <sheet>
+                        <group>
+                            <field name="number"/>
+                        </group>
+                    </sheet>
+                    <footer>
+                        <button type="object"
+                                name="button_number_submit"
+                                string="归还" class="approval"/>
+                        <button special="cancel"
+                                string="取消"
+                                class="btn-secondary"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="warehouse_serial_search_view">
+            <field name="name">序列号搜索</field>
+            <field name="model">warehouse.serial</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="serial_number"/>
+                    <field name="state"/>
+                    <field name="user"/>
+                    <filter name="outbound" string="已出库" domain="[('state','=','outbound')]"/>
+                    <filter name="wait_out" string="待出库" domain="[('state','=','wait_out')]"/>
+                </search>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="warehouse_material_search_view">
+            <field name="name">物料搜索</field>
+            <field name="model">warehouse.material</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="name"/>
+                    <field name="code"/>
+                    <field name="user"/>
+                    <filter name="my_material" string="我的" domain="[('user', '=', uid)]"/>
+                </search>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="warehouse_material_graph_view">
+            <field name="name">物料管理图表-graph</field>
+            <field name="model">warehouse.material</field>
+            <field name="arch" type="xml">
+                <graph string="物料">
+                    <field name="name"/>
+                    <field name="max_number"/>
+                </graph>
+            </field>
+        </record>
+
+    </data>
+</odoo>

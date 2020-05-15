@@ -1,0 +1,16 @@
+<odoo>
+    <data>
+
+        <record id="ir_cron_scheduler_warehouse_action" model="ir.cron">
+            <field name="name">自动同步仓库物料</field>
+            <field name="model_id" ref="model_warehouse_house"/>
+            <field name="state">code</field>
+            <field name="code">model.synchronous_materials()</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">minutes</field>
+            <field name="numbercall">-1</field>
+            <field name="doall" eval="False"/>
+        </record>
+
+    </data>
+</odoo>

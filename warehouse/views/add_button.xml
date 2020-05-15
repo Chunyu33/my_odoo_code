@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <template id="assets_backend_bicon_wms_base_warehouse" inherit_id="web.assets_backend" name="bicon_wms_base_assets">
+        <xpath expr="script[last()]" position="after">
+            <script type="text/javascript" src="/warehouse/static/src/js/tree_button_approval.js"/>
+            <link rel="stylesheet" type="text/css" href="/warehouse/static/src/css/website_assets_backend.css"/>
+            <link rel="stylesheet" type="text/css" href="/warehouse/static/src/css/button_css.css"/>
+        </xpath>
+    </template>
+
+</odoo>

@@ -1,0 +1,80 @@
+<odoo>
+    <data>
+        <!--  actions  -->
+        <record model="ir.actions.act_window" id="warehouse_house_action_window">
+            <field name="name">仓库</field>
+            <field name="res_model">warehouse.house</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <record model="ir.actions.act_window" id="warehouse_category_action_window">
+            <field name="name">分类</field>
+            <field name="res_model">warehouse.category</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <record model="ir.actions.act_window" id="warehouse_material_action_window">
+            <field name="name">物料管理</field>
+            <field name="res_model">warehouse.material</field>
+            <field name="view_mode">tree,form,graph</field>
+            <field name="context" eval="{'search_default_my_material':1}"/>
+        </record>
+
+        <record model="ir.actions.act_window" id="warehouse_approval_action_window">
+            <field name="name">物料借还审批</field>
+            <field name="res_model">warehouse.approval</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <record model="ir.actions.act_window" id="warehouse_serial_action_window">
+            <field name="name">序列号</field>
+            <field name="res_model">warehouse.serial</field>
+            <field name="view_mode">tree,form</field>
+            <!-- 添加默认过滤条件 search_default_ (view中filter标签的name属性) -->
+            <field name="context" eval="{'search_default_outbound':1}"/>
+        </record>
+
+        <record model="ir.actions.act_window" id="warehouse_record_action_window">
+            <field name="name">物料借还记录</field>
+            <field name="res_model">warehouse.record</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <record model="ir.actions.act_window" id="warehouse_department_action_window">
+            <field name="name">部门</field>
+            <field name="res_model">warehouse.department</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <record model="ir.actions.act_window" id="warehouse_users_action_window">
+            <field name="name">用户</field>
+            <field name="res_model">res.users</field>
+            <field name="view_mode">tree,form,kanban</field>
+        </record>
+
+
+        <!-- 菜单 -->
+        <menuitem name="仓库管理" id="menu_l1_warehouse_menu_root" web_icon="warehouse,static/src/image/icon.png"/>
+        <menuitem name="仓库管理" id="menu_l2_warehouse_house" parent="menu_l1_warehouse_menu_root"
+                  action="warehouse_house_action_window"/>
+
+        <menuitem name="仓库分类" id="menu_l2_warehouse_category" parent="menu_l1_warehouse_menu_root"
+                  action="warehouse_category_action_window"/>
+
+        <menuitem name="物料管理" id="menu_l2_warehouse_material" parent="menu_l1_warehouse_menu_root"
+                  action="warehouse_material_action_window"/>
+
+        <menuitem name="物料审批" id="menu_l2_warehouse_approval" parent="menu_l1_warehouse_menu_root"
+                  action="warehouse_approval_action_window"/>
+
+        <menuitem name="物料借还" id="menu_l2_warehouse_record" parent="menu_l1_warehouse_menu_root"
+                  action="warehouse_record_action_window"/>
+
+        <menuitem name="部门表" id="menu_l2_warehouse_department" parent="menu_l1_warehouse_menu_root"
+                  action="warehouse_department_action_window"/>
+
+        <menuitem name="用户" id="menu_l2_warehouse_users" parent="menu_l1_warehouse_menu_root"
+                  action="warehouse_users_action_window"/>
+
+    </data>
+</odoo>
