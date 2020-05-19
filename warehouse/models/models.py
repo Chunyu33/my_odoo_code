@@ -19,15 +19,15 @@ class House(models.Model):
         try:
             all_house = self.sudo().search([])
             all_materials = self.sudo().env['warehouse.material'].search([])
-            materrial_ids = []
+            material_ids = []
             for house in all_house:
                 for item in all_materials:
                     if item.house.id == house.id:
-                        materrial_ids.append(item.id)
+                        material_ids.append(item.id)
                 for item in all_materials:
                     if item.house.id == house.id:
-                        house.materials = [(6, 0, materrial_ids)]
-                        materrial_ids.clear()
+                        house.materials = [(6, 0, material_ids)]
+                        material_ids.clear()
                         break
         except exceptions.ValidationError as err:
             raise err
@@ -52,8 +52,8 @@ class Material(models.Model):
         result = fixed_str + str(random.randint(1, 1e5))
         return result
 
-    name = fields.Char(string='物料名称')
-    code = fields.Char(string='物料编码', readonly=True, default=generate_code)
+    name = fields.Char(string='物料名称', required=True)
+    code = fields.Char(string='物料编码', default=generate_code)
     serial_numbers = fields.Many2many('warehouse.serial', string='序列号')
     max_number = fields.Integer(string='库存数量')
     unit_price = fields.Float(string='单价')
@@ -125,14 +125,14 @@ class Approval(models.Model):
     _description = '物料审批'
 
     name = fields.Many2one(comodel_name='warehouse.material', string='物料')
-    code = fields.Char(string='物料编码',)
+    code = fields.Char(string='物料编码')
     serial_numbers = fields.Many2many('warehouse.serial', 'id', string='序列号')
     apply_number = fields.Integer(string='申请数量')
     surplus_number = fields.Integer(string='剩余数量',)
     type = fields.Selection([
         ('borrow', '借出'),
         ('back', '归还'),
-    ], string='类型')
+    ], string='类型', required=True)
     state = fields.Selection([
         ('put', '入库'),
         ('out', '出库'),
@@ -266,7 +266,6 @@ class Approval(models.Model):
             self.surplus_number = material.max_number
             # 更新关联
             self.sudo().serial_numbers = [[6, 0, new_serial_ids]]
-            # self.sudo().write({'code': code_num, 'surplus_number': material.max_number})     # 确保序列号正确写入
         else:
             return
 
@@ -298,7 +297,7 @@ class Approval(models.Model):
 
     # 批量审批 通过
     @api.model
-    def to_agree(self, **args):
+    def to_agree(self):
         user_id = self.env.user.id
         managers, dep_managers = self.get_security_users()
         if user_id in managers or user_id in dep_managers:
